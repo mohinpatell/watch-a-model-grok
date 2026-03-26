@@ -1,0 +1,30 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.env
+
+# Training artifacts (too big for git)
+checkpoints/
+*.pt
+*.pth
+*.npz
+
+# Media
+*.gif
+*.mp4
+!readme-demo.gif
+
+# Web
+node_modules/
+.next/
+out/
+dist/
+.turbo/
+
+# OS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
