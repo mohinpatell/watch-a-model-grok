@@ -25,6 +25,10 @@ class Config:
     # Checkpointing. Log-spaced to capture both memorization and grok phases.
     num_checkpoints: int = 300
 
+    # Ablation knobs — defaults match the main paper setup.
+    init_mode: str = "sqrt_d"   # "sqrt_d" | "pytorch" — embeddings + linears scale.
+    use_layer_norm: bool = False  # add pre-norm LayerNorm blocks.
+
     @property
     def vocab_size(self) -> int:
         # p number tokens plus one separator token ("=").
