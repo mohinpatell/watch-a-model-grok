@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fafafa;
+  --surface: #ffffff;
+  --foreground: #1f1f1f;
+  --muted: #6a6a6a;
+  --faint: #d8d8d8;
+  --rule: #e5e5e5;
+  --accent: #0969da;
+  --train: #cf222e;
+  --test: #1f6feb;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-rule: var(--rule);
+  --color-accent: var(--accent);
+  --color-train: var(--train);
+  --color-test: var(--test);
+  --font-serif: var(--font-serif);
+  --font-mono: var(--font-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+code, pre, kbd {
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.88em;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 120ms;
+}
+
+a:hover {
+  border-bottom-color: var(--accent);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-serif), Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #111;
+}
+
+h1 { font-size: 2.4rem; line-height: 1.15; margin: 0; }
+h2 { font-size: 1.55rem; line-height: 1.25; margin: 2.5rem 0 0.8rem; }
+h3 { font-size: 1.2rem; line-height: 1.3; margin: 2rem 0 0.6rem; }
+
+p {
+  margin: 0.9rem 0;
+}
+
+figcaption, .caption {
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.45;
+  font-family: var(--font-serif);
+  font-style: italic;
+}
+
+/* Minor visual tweaks for KaTeX in body copy. */
+.katex { font-size: 1em; }
+.katex-display { margin: 1.2rem 0; }
+
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
