@@ -53,16 +53,6 @@ def capture_checkpoint(
     _, attns = model(attn_probe_x, return_attn=True)
     attn = attns[0].detach().cpu().numpy().astype(np.float32)
 
-    sample_pairs = [(0, 0), (1, 1), (5, 7), (50, 60), (100, 12)]
-    sample_x = torch.tensor(
-        [[a, b, model.cfg.eq_token] for a, b in sample_pairs],
-        device=train_x.device,
-    )
-    sample_logits = model(sample_x)
-    sample_probs = F.softmax(sample_logits[:, -1, :], dim=-1).cpu().numpy()
-    sample_preds = sample_logits[:, -1, :].argmax(-1).cpu().numpy().tolist()
-    sample_true = [(a + b) % p for a, b in sample_pairs]
-
     model.train(was_training)
     return {
         "step": step,
@@ -72,10 +62,6 @@ def capture_checkpoint(
         "test_acc": test_acc,
         "embeds": embeds,
         "attn": attn,
-        "sample_pairs": sample_pairs,
-        "sample_preds": sample_preds,
-        "sample_true": sample_true,
-        "sample_probs": sample_probs.astype(np.float32),
     }
 
 
@@ -89,7 +75,6 @@ def save_snapshots(snapshots: list[dict], cfg: Config, out_dir: Path) -> None:
     test_acc = np.array([s["test_acc"] for s in snapshots], dtype=np.float32)
     embeds = np.stack([s["embeds"] for s in snapshots], axis=0)
     attn = np.stack([s["attn"] for s in snapshots], axis=0)
-    sample_probs = np.stack([s["sample_probs"] for s in snapshots], axis=0)
 
     np.savez_compressed(
         out_dir / "arrays.npz",
@@ -100,7 +85,6 @@ def save_snapshots(snapshots: list[dict], cfg: Config, out_dir: Path) -> None:
         test_acc=test_acc,
         embeds=embeds,
         attn=attn,
-        sample_probs=sample_probs,
     )
 
     summary = {
@@ -111,10 +95,6 @@ def save_snapshots(snapshots: list[dict], cfg: Config, out_dir: Path) -> None:
         "test_loss": test_loss.tolist(),
         "train_acc": train_acc.tolist(),
         "test_acc": test_acc.tolist(),
-        "sample_pairs": snapshots[0]["sample_pairs"],
-        "sample_true": snapshots[0]["sample_true"],
-        "sample_preds_per_step": [s["sample_preds"] for s in snapshots],
-        "probe_pairs_note": "attn probe fixed across steps; see train.py",
     }
     with open(out_dir / "summary.json", "w") as f:
         json.dump(summary, f)

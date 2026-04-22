@@ -1,11 +1,10 @@
 [project]
 name = "watch-a-model-grok"
 version = "0.1.0"
-description = "Add your description here"
+description = "Scroll-driven visualization of a 1-layer transformer grokking modular addition, after Nanda et al. 2023."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "einops>=0.8.2",
     "matplotlib>=3.10.8",
     "numpy>=2.4.4",
     "scipy>=1.17.1",

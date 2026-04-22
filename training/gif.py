@@ -4,7 +4,6 @@ before committing to the web build — if this GIF isn't visually striking,
 stop here."""
 
 import argparse
-import json
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -12,10 +11,8 @@ import numpy as np
 from matplotlib.animation import PillowWriter, FuncAnimation
 
 
-def render_gif(arrays_path: Path, summary_path: Path, out_path: Path, fps: int = 12) -> None:
+def render_gif(arrays_path: Path, out_path: Path, fps: int = 12) -> None:
     data = np.load(arrays_path)
-    with open(summary_path) as f:
-        summary = json.load(f)
 
     steps = data["steps"]
     train_loss = data["train_loss"]
@@ -108,11 +105,10 @@ def render_gif(arrays_path: Path, summary_path: Path, out_path: Path, fps: int =
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--arrays", default="checkpoints/raw/arrays_aligned.npz", type=Path)
-    ap.add_argument("--summary", default="checkpoints/raw/summary.json", type=Path)
     ap.add_argument("--out", default="checkpoints/raw/training.gif", type=Path)
     ap.add_argument("--fps", type=int, default=12)
     args = ap.parse_args()
-    render_gif(args.arrays, args.summary, args.out, fps=args.fps)
+    render_gif(args.arrays, args.out, fps=args.fps)
 
 
 if __name__ == "__main__":
