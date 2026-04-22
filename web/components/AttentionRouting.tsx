@@ -38,6 +38,8 @@ export default function AttentionRouting() {
     }
 
     const plot = Plot.plot({
+      ariaLabel: "attention weights from the = position, per head",
+      ariaDescription: `Stacked bars per head showing attention share on positions a, b, and =, averaged over ${nProbe} probe pairs at the current checkpoint.`,
       marginLeft: 72,
       marginRight: 18,
       marginBottom: 30,

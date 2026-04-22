@@ -56,6 +56,8 @@ export default function LossChart({
     const marginBottom = compact ? 28 : 36;
 
     const plot = Plot.plot({
+      ariaLabel: `training ${label} curves`,
+      ariaDescription: `Train and test ${label} per step over ${steps.length} checkpoints, log-scaled x-axis.`,
       marginLeft: compact ? 40 : 52,
       marginBottom,
       marginTop,

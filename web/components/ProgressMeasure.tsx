@@ -42,6 +42,8 @@ export default function ProgressMeasure() {
     const marginBottom = 36;
 
     const plot = Plot.plot({
+      ariaLabel: `embedding power share at k=${fourier_k} across training`,
+      ariaDescription: `Line chart of the share of token-embedding L2 power concentrated at frequency k=${fourier_k}, per checkpoint. The dashed horizontal line marks the uniform baseline 1/floor(p/2).`,
       marginLeft: 56,
       marginRight: 56,
       marginBottom,

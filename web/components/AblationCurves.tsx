@@ -49,6 +49,8 @@ export default function AblationCurves() {
 
     const legendWidth = width < 560 ? 0 : 160;
     const plot = Plot.plot({
+      ariaLabel: "test loss per ablation across training",
+      ariaDescription: "Log-log line chart of test loss per training step, one curve per ablation variant.",
       marginLeft: 56,
       marginRight: legendWidth || 18,
       marginBottom: 36,

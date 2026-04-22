@@ -82,6 +82,7 @@ export default function Scrubber() {
           }}
           className="w-full accent-[var(--accent)] relative z-10"
           aria-label="training step"
+          aria-valuetext={`step ${step.toLocaleString()}, test accuracy ${testAcc.toFixed(2)}`}
         />
         <div className="pointer-events-none absolute inset-x-0 -bottom-3 h-3">
           {waypoints.map((wp) => {

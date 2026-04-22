@@ -23,6 +23,8 @@ export default function FftSpectrum() {
     }));
 
     const plot = Plot.plot({
+      ariaLabel: "embedding power share per Fourier frequency at current checkpoint",
+      ariaDescription: `Bar chart of the token embedding's L2 power share at each frequency k from 1 to ${share.length}. The bar at k=${kStar} is highlighted.`,
       marginLeft: 56,
       marginRight: 18,
       marginBottom: 36,

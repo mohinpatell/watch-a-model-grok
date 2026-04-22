@@ -57,6 +57,8 @@ export default function FftSpectrogram() {
     const legendWidth = width < 560 ? 0 : 100;
 
     const plot = Plot.plot({
+      ariaLabel: "embedding power share per Fourier frequency across training",
+      ariaDescription: `Heatmap of embedding power share at each frequency k from 1 to ${nK}, across all checkpoints. Training step on the log x-axis, frequency on the y-axis. The dashed horizontal line marks k=${fourier_k}.`,
       marginLeft: 48,
       marginRight: legendWidth || 12,
       marginBottom: 36,
