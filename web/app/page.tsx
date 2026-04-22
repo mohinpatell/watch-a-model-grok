@@ -86,7 +86,7 @@ export default function Home() {
           </figcaption>
         </figure>
 
-        <h2>The task and the model</h2>
+        <h2 id="task-and-model">The task and the model</h2>
 
         <p>
           The task is to predict the sum of two numbers modulo 113, taught on
@@ -148,7 +148,7 @@ for step in range(40_000):
           the sweep.
         </aside>
 
-        <h2>Memorization is fast</h2>
+        <h2 id="memorization">Memorization is fast</h2>
 
         <p>
           By step 140, train accuracy is 1.0, and the model has compressed
@@ -160,7 +160,7 @@ for step in range(40_000):
           overfitting, you would look entirely reasonable.
         </p>
 
-        <h2>The plateau is not empty</h2>
+        <h2 id="plateau">The plateau is not empty</h2>
 
         <p>
           From step ~140 to step ~6,000, train loss sits near zero and test
@@ -219,7 +219,7 @@ for step in range(40_000):
           </figcaption>
         </figure>
 
-        <h2>The circuit</h2>
+        <h2 id="circuit">The circuit</h2>
 
         <p>
           The final model embeds each token <Tex expr={TEX.tokenDomain} />{" "}
@@ -264,7 +264,7 @@ for step in range(40_000):
           </figcaption>
         </figure>
 
-        <h2>The snap</h2>
+        <h2 id="snap">The snap</h2>
 
         <p>
           Pull the scrubber below through training. You&rsquo;re looking at
@@ -295,7 +295,7 @@ for step in range(40_000):
           </figcaption>
         </figure>
 
-        <h2>What didn&rsquo;t work</h2>
+        <h2 id="what-didnt-work">What didn&rsquo;t work</h2>
 
         <p>
           I ran six ablations. Each changes one hyperparameter of the
@@ -341,7 +341,7 @@ for step in range(40_000):
           </figcaption>
         </figure>
 
-        <h2>Notes &amp; references</h2>
+        <h2 id="references">Notes &amp; references</h2>
 
         <ul className="list-disc pl-5 space-y-1.5 text-[0.98rem]">
           <li>
