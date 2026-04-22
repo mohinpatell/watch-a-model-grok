@@ -3,7 +3,7 @@ frames so the ring glides rather than flips between adjacent checkpoints.
 
 Nanda et al. 2023 shows the grokked model encodes tokens as points on a
 circle at angle 2πkt/p for some dominant frequency k. Top-2 PCA mixes the
-4–5 significant frequencies and washes the ring out — we instead project
+4 or 5 significant frequencies and washes the ring out, so we instead project
 onto the cos/sin basis for the single dominant frequency of the final
 embedding. That same basis is applied to every earlier checkpoint so the
 transition from scatter → ring is visible."""

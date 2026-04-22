@@ -13,7 +13,7 @@ A 1-layer transformer (4 heads, `d_model=128`) trained on 30% of the 113² possi
 - memorizes the training set in ~140 steps (train acc → 1.0, test acc ≈ 0)
 - plateaus for ~8000 steps (test loss climbs to a peak around step 1,500, then drifts down)
 - snaps between steps 6,000 and 8,500 (test acc near-zero → 99% over ~2,000 steps)
-- ends with a clean Fourier circuit — token embeddings sit on a ring at frequency `k = 46`
+- ends with a clean Fourier circuit: token embeddings sit on a ring at frequency `k = 46`
 
 ## Results
 
@@ -23,7 +23,7 @@ A 1-layer transformer (4 heads, `d_model=128`) trained on 30% of the 113² possi
 | 494   | 1.00      | 0.04     | memorized, test at chance         |
 | 3009  | 1.00      | 0.07     | plateau, nothing visible moving   |
 | 5901  | 1.00      | 0.16     | onset, test loss peaks then falls |
-| 7835  | 1.00      | 0.82     | grok — test acc snapping 0 → 1    |
+| 7835  | 1.00      | 0.82     | grok, test acc snapping 0 → 1     |
 | 40000 | 1.00      | 1.00     | generalized, Fourier ring stable  |
 
 ## What's actually happening
@@ -35,7 +35,7 @@ The model sees 30% of the 113² possible `(a, b)` pairs, so it has two viable st
 1. **Memorize**: treat each of the ~3,800 training pairs as a lookup. Test accuracy stays at chance because there's no structure to generalize.
 2. **Compute**: implement `(a + b) mod 113` as an actual algorithm. Works on any pair.
 
-Memorization is available within a few hundred steps because the model has enough capacity to store every answer in weight space. Generalization isn't — it requires the weights to arrange themselves into a specific circuit that doesn't exist at init.
+Memorization is available within a few hundred steps because the model has enough capacity to store every answer in weight space. Generalization isn't. It requires the weights to arrange themselves into a specific circuit that doesn't exist at init.
 
 Weight decay (`wd = 1.0`) is what bridges them. A memorizing solution spreads large weights across many parameters; a generalizing solution concentrates weight norm on a few Fourier components. Weight decay keeps applying pressure toward lower norm, so once train loss is near zero and the gradient signal fades, the dominant force on the parameters is *shrink*. The model drifts through a plateau where both solutions coexist, then tips into the Fourier circuit because it's the lower-norm basin.
 
@@ -51,11 +51,11 @@ cos(k·a) · cos(k·b) - sin(k·a) · sin(k·b) = cos(k·(a + b))
 
 The unembedding subtracts each candidate `c` to form `cos(k·(a + b − c))`; summed across the active frequencies, this peaks sharply at `c ≡ a + b (mod p)`. You can see this in the viz: the scatter snaps onto a clean ring during the grok, and the attention heads specialize to route the two operands into the `=` position.
 
-The specific frequencies (`{13, 14, 28, 31, 46}` for this seed, with `k = 46` slightly dominant) depend on the seed — any `k` coprime with 113 could in principle work. What's universal is the *shape* of the solution: circular embeddings, phase-based attention, a small number of active Fourier components in the final logits.
+The specific frequencies (`{13, 14, 28, 31, 46}` for this seed, with `k = 46` slightly dominant) depend on the seed; any `k` coprime with 113 could in principle work. What's universal is the *shape* of the solution: circular embeddings, phase-based attention, a small number of active Fourier components in the final logits.
 
 ### Init scale matters
 
-PyTorch's default `nn.Embedding` initializes with `N(0, 1)`, which for `d_model = 128` puts embeddings at distance `≈ √128 ≈ 11` from the origin. Weight decay has to drag them down over thousands of steps before its pressure meaningfully shapes the geometry — memorization happens in the meantime and the run stalls.
+PyTorch's default `nn.Embedding` initializes with `N(0, 1)`, which for `d_model = 128` puts embeddings at distance `≈ √128 ≈ 11` from the origin. Weight decay has to drag them down over thousands of steps before its pressure meaningfully shapes the geometry. Memorization happens in the meantime and the run stalls.
 
 Scaling init by `1/√d_model` puts embeddings at radius `≈ 1` from step 0. From there, weight-decay pressure and the gradient signal are on the same order, so the Fourier solution is reachable without first burning thousands of steps undoing the initialization.
 
@@ -121,4 +121,4 @@ Stack: Next.js 16 (static export), TypeScript, Tailwind v4, Zustand for client s
 
 ## Deploy
 
-GitHub Pages via `.github/workflows/deploy.yml`. Pushes to `main` build `web/` and publish `web/out/` — no CI secrets required. Next.js is configured to apply a `/watch-a-model-grok` basePath only when `GITHUB_PAGES=true` (set by the workflow), so local `pnpm dev` still serves at `/`.
+GitHub Pages via `.github/workflows/deploy.yml`. Pushes to `main` build `web/` and publish `web/out/`, no CI secrets required. Next.js is configured to apply a `/watch-a-model-grok` basePath only when `GITHUB_PAGES=true` (set by the workflow), so local `pnpm dev` still serves at `/`.

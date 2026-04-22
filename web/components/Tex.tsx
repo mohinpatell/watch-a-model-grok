@@ -21,7 +21,7 @@ export default function Tex({ expr, display = false }: Props) {
   }, [expr, display]);
 
   // Render the raw expression as a text fallback so the slot reserves
-  // layout space pre-hydration — katex.render then replaces it.
+  // layout space pre-hydration; katex.render then replaces it.
   if (display) {
     return (
       <div

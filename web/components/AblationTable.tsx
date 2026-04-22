@@ -43,7 +43,7 @@ export default function AblationTable() {
   if (missing) {
     return (
       <div className="border border-[var(--rule)] bg-white rounded px-4 py-3 font-mono text-xs text-[var(--muted)]">
-        ablation data not yet exported — run{" "}
+        ablation data not yet exported. Run{" "}
         <code>uv run python -m training.ablate</code> then{" "}
         <code>uv run python -m training.export_ablations</code>.
       </div>
@@ -107,7 +107,7 @@ export default function AblationTable() {
               <td className="py-2 pr-3 text-right tabular-nums text-[var(--muted)]">
                 {r.grokStep !== null
                   ? r.grokStep.toLocaleString()
-                  : "—"}
+                  : "-"}
               </td>
               <td
                 className="py-2 text-right"

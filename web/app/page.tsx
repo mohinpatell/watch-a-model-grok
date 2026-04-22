@@ -59,12 +59,12 @@ export default function Home() {
           A 1-layer transformer learning <Tex expr={TEX.task} /> does
           something strange: it memorizes the training set in about 140
           gradient steps, sits on a flat plateau for nearly 8,000 more steps,
-          and then <em>generalizes</em> — test accuracy climbs from
+          and then <em>generalizes</em>. Test accuracy climbs from
           near-zero to 99% inside a couple thousand steps, with the final
           lift from 50% to 99% taking under a thousand. Nanda et al. (2023)
           showed
           that the model is quietly building a Fourier-arithmetic circuit the
-          whole time — you just can&rsquo;t see it from the loss curve.
+          whole time, and you just can&rsquo;t see it from the loss curve.
         </p>
 
         <p>
@@ -120,7 +120,7 @@ export default function Home() {
         <p>
           Training is AdamW with full-batch gradient descent (batch = training
           set), learning rate 1e-3, and the one hyperparameter that matters
-          most: <code>weight_decay=1.0</code>. Nothing else is unusual — no
+          most: <code>weight_decay=1.0</code>. Nothing else is unusual: no
           warm-up, no schedule, no regularization tricks.
         </p>
 
@@ -142,17 +142,17 @@ for step in range(40_000):
           scale the rest of the network uses. Leaving the embeddings at
           default puts them at radius ≈ 11 at step 0, which weight decay has
           to slowly drag down before its pressure can shape the geometry. I
-          burned a couple of days before catching this — the{" "}
+          burned a couple of days before catching this. The{" "}
           <em>init_default</em> row in the ablation table stalls at 2% test
-          accuracy after 15k steps — comfortably the worst failure mode in
+          accuracy after 15k steps, comfortably the worst failure mode in
           the sweep.
         </aside>
 
         <h2>Memorization is fast</h2>
 
         <p>
-          By step 140, train accuracy is 1.0 — the model has compressed the
-          3,830 training examples into a lookup table in weight space. Train
+          By step 140, train accuracy is 1.0, and the model has compressed
+          the 3,830 training examples into a lookup table in weight space. Train
           loss crosses <Tex expr={TEX.tenNegThree} /> a few hundred steps
           later and keeps falling. Test loss is <em>higher</em> than it was
           at init (because confidently-wrong predictions dominate), and test
@@ -164,7 +164,7 @@ for step in range(40_000):
 
         <p>
           From step ~140 to step ~6,000, train loss sits near zero and test
-          loss drifts — nothing on the curves announces the transition to
+          loss drifts. Nothing on the curves announces the transition to
           come. Weight decay, though, is quietly dragging every parameter
           toward zero. With the train loss already at zero, the gradient from
           the data is small; the weight-decay term{" "}
@@ -197,7 +197,7 @@ for step in range(40_000):
         </figure>
 
         <p>
-          <Tex expr={TEX.kEq46} /> is not special by itself — the broader
+          <Tex expr={TEX.kEq46} /> is not special by itself. The broader
           spectrum tells a sharper story. Showing the share at <em>every</em>{" "}
           frequency, across training, makes the circuit&rsquo;s emergence
           visible as a handful of horizontal bands lighting up against
@@ -209,10 +209,10 @@ for step in range(40_000):
           <figcaption className="mt-2">
             Embedding power share at each frequency (y) over training steps
             (x). The orange dashed line marks <Tex expr={TEX.kEq46} />. For
-            the first few thousand steps every row is the same dim blue —
+            the first few thousand steps every row is the same dim blue:
             the spectrum is flat. Around step 3,000 a few frequencies
-            brighten, and by the time test accuracy snaps, four rows —{" "}
-            <Tex expr={TEX.fourFreqs} /> — have pulled away. The fifth
+            brighten, and by the time test accuracy snaps, four rows
+            (<Tex expr={TEX.fourFreqs} />) have pulled away. The fifth
             component, <Tex expr={TEX.kEq28} />, only emerges later as the
             circuit consolidates. Everything in between the bright bands
             stays at noise.
@@ -278,9 +278,7 @@ for step in range(40_000):
         <figure className="my-6">
           <div className="rounded-lg border border-[var(--rule)] bg-[var(--surface)] p-4 flex flex-col gap-4">
             <Scrubber />
-            <div className="flex items-center justify-center">
-              <EmbeddingScatter />
-            </div>
+            <EmbeddingScatter />
             <FftSpectrum />
           </div>
           <figcaption className="mt-2">
@@ -291,7 +289,7 @@ for step in range(40_000):
             rotation on the circle. The bar chart below the ring shows the
             same frame&rsquo;s embedding power spectrum: early on it looks
             like noise, but during grokking energy concentrates sharply on a
-            handful of independent Fourier modes — <Tex expr={TEX.kEq46} />{" "}
+            handful of independent Fourier modes: <Tex expr={TEX.kEq46} />{" "}
             (highlighted in orange) alongside a few others that together
             define the ring.
           </figcaption>
@@ -300,7 +298,7 @@ for step in range(40_000):
         <h2>What didn&rsquo;t work</h2>
 
         <p>
-          I ran six ablations — each changes one hyperparameter of the
+          I ran six ablations. Each changes one hyperparameter of the
           baseline and trains for 15,000 steps (well past when the baseline
           groks). Results:
         </p>
@@ -310,10 +308,10 @@ for step in range(40_000):
         <p>
           The test-loss curves tell the same story. Without the full{" "}
           <code>weight_decay=1.0</code>, the model overfits and test loss
-          keeps climbing — <code>wd=0.01</code> is close enough to zero
+          keeps climbing. <code>wd=0.01</code> is close enough to zero
           here to produce the same failure. With PyTorch&rsquo;s default{" "}
           <Tex expr={TEX.normalN01} /> embedding init, the model memorizes
-          and test accuracy hovers below 3% — the strongest failure mode in
+          and test accuracy hovers below 3%, the strongest failure mode in
           this sweep, and the one that confirms the init-scale note above.
           The two alternative seeds grok on roughly the same schedule as the
           baseline: the phenomenon is not seed-fragile.
@@ -321,7 +319,7 @@ for step in range(40_000):
 
         <p>
           The <em>layer_norm</em> row is the most surprising: adding pre-norm
-          LayerNorm doesn&rsquo;t block grokking — it <em>accelerates</em>{" "}
+          LayerNorm doesn&rsquo;t block grokking; it <em>accelerates</em>{" "}
           it, to around step 3,000 versus 8,000 in the baseline. I ran the
           same LayerNorm configuration with two additional seeds to check
           this wasn&rsquo;t a lucky draw; they grokked at step 3,481 and
@@ -330,7 +328,7 @@ for step in range(40_000):
           (a Fourier decomposition is cleaner without the normalization), not
           because the circuit refuses to form with it. That&rsquo;s worth
           flagging because it&rsquo;s easy to read the paper and conclude
-          LayerNorm is part of the problem. It isn&rsquo;t — at least not
+          LayerNorm is part of the problem. It isn&rsquo;t, at least not
           on this task.
         </p>
 

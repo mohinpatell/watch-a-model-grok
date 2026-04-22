@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { loadDataset } from "@/lib/data";
 import { useStore } from "@/lib/store";
 
-// Fires the dataset load on mount. Renders nothing — chart components
+// Fires the dataset load on mount. Renders nothing. Chart components
 // handle their own pending-data state.
 export default function DataLoader() {
   const setDataset = useStore((s) => s.setDataset);

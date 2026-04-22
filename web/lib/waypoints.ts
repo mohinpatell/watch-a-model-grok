@@ -9,7 +9,7 @@ export const waypoints: Waypoint[] = [
   { id: "memorize", step: 500, title: "memorization is fast" },
   { id: "plateau", step: 3000, title: "the long plateau" },
   { id: "onset", step: 6000, title: "something starts to give" },
-  { id: "grok", step: 7800, title: "the snap — grokking" },
+  { id: "grok", step: 7800, title: "the snap: grokking" },
   { id: "generalized", step: 40000, title: "a learned algorithm" },
 ];
 

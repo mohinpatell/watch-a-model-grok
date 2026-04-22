@@ -94,7 +94,7 @@ class Block(nn.Module):
 class GrokTransformer(nn.Module):
     """Nanda et al. 2023 setup: 1-layer transformer for (a + b) mod p.
 
-    No layer norm, no biases — matches the paper for reproducibility. Init
+    No layer norm, no biases. Matches the paper for reproducibility. Init
     scale 1/sqrt(d_model) across embeddings and linear layers. PyTorch's
     default embedding init (N(0, 1)) is ~11x too large here and prevents
     grokking from completing in 40k steps under wd=1.0.

@@ -1,4 +1,4 @@
-"""Ablation sweep — vary a handful of knobs and record train/test curves so
+"""Ablation sweep: vary a handful of knobs and record train/test curves so
 we can show what does and doesn't grok. Cheap per-run: no embedding or attn
 snapshots, just scalar curves at log-spaced checkpoints."""
 
@@ -30,7 +30,7 @@ ABLATIONS: list[dict] = [
     {"name": "seed_7", "seed": 7, "canonical": True},
     # Two extra LayerNorm runs across seeds to check whether the ~3k-step
     # grok observed on seed=42 is seed-robust or a fluke. Not shown in the
-    # web table — referenced from the essay in prose.
+    # web table, referenced from the essay in prose.
     {"name": "layer_norm_s0", "use_layer_norm": True, "seed": 0},
     {"name": "layer_norm_s7", "use_layer_norm": True, "seed": 7},
 ]

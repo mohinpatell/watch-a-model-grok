@@ -83,5 +83,5 @@ export default function AblationCurves() {
     return () => plot.remove();
   }, [bundle, width, ref]);
 
-  return <div ref={ref} className="w-full my-6" />;
+  return <div ref={ref} className="w-full" />;
 }

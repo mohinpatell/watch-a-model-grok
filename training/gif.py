@@ -1,6 +1,6 @@
 """Render a matplotlib GIF of the training run: loss curves + embedding ring
 + attention heatmap, synchronized to step. This is the kill-or-proceed check
-before committing to the web build — if this GIF isn't visually striking,
+before committing to the web build. If this GIF isn't visually striking,
 stop here."""
 
 import argparse
@@ -22,7 +22,7 @@ def render_gif(arrays_path: Path, out_path: Path, fps: int = 12) -> None:
     n_frames = len(steps)
     p = embeds_2d.shape[1]
 
-    # Fixed axis limits across the whole animation — computed from all frames.
+    # Fixed axis limits across the whole animation, computed from all frames.
     pad = 0.1
     all_xy = embeds_2d.reshape(-1, 2)
     xmin, ymin = all_xy.min(axis=0) - pad
@@ -64,7 +64,7 @@ def render_gif(arrays_path: Path, out_path: Path, fps: int = 12) -> None:
         c=np.arange(p), cmap="twilight", s=30, edgecolor="white", linewidth=0.3
     )
 
-    # Attention heatmap — average over batch and heads, layer 0.
+    # Attention heatmap: average over batch and heads, layer 0.
     ax_attn = axes[2]
     ax_attn.set_title("attention (head 0, probe pair 0)")
     ax_attn.set_xticks([0, 1, 2], ["a", "b", "="])

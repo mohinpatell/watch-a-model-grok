@@ -1,7 +1,7 @@
 """Mechanistic progress measures computed from the captured embeddings.
 
 The grokking story is that a Fourier circuit forms during the apparent
-plateau — long before test loss falls. We verify this by tracking how much
+plateau, long before test loss falls. We verify this by tracking how much
 of the token-embedding energy sits on each Fourier frequency over training.
 
 For each checkpoint, we compute
@@ -9,7 +9,7 @@ For each checkpoint, we compute
     power[k] = sum_d |fft(E_d)|_k^2       (d = embedding dim, k = freq)
 
 and normalize by the total (k >= 1) power. The dominant frequency of the
-final embedding — k_star = 46 for the seed=42 run — climbs from the floor
+final embedding (k_star = 46 for the seed=42 run) climbs from the floor
 ~1/(p/2) during memorization to a large share during grokking. Plotting
 power[k_star] vs. step is a "did the circuit form?" curve that anticipates
 the test-loss snap by thousands of steps.

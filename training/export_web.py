@@ -1,9 +1,9 @@
 """Convert the aligned arrays.npz + summary.json into web-friendly assets:
 
-- meta.json      — per-step scalars (steps, losses, accs) + config + shapes
-- embeds.bin     — float32 (n_frames, p, 2) embedding positions
-- attn.bin       — float32 (n_frames, probe_batch, n_heads, seq, seq) attention
-- fft_share.bin  — float32 (n_frames, p//2) per-frequency embedding power share
+- meta.json:      per-step scalars (steps, losses, accs) + config + shapes
+- embeds.bin:     float32 (n_frames, p, 2) embedding positions
+- attn.bin:       float32 (n_frames, probe_batch, n_heads, seq, seq) attention
+- fft_share.bin:  float32 (n_frames, p//2) per-frequency embedding power share
 
 Binaries are raw float32 little-endian, loaded in the browser with
 `new Float32Array(await res.arrayBuffer())` and reshaped in JS. JSON holds

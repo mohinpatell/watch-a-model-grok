@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "Watch a model grok",
   description:
-    "A 1-layer transformer learns modular addition mod 113 — memorization, plateau, and the Fourier circuit that emerges at grokking.",
+    "A 1-layer transformer learns modular addition mod 113: memorization, plateau, and the Fourier circuit that emerges at grokking.",
   openGraph: {
     title: "Watch a model grok",
     description:
