@@ -26,8 +26,10 @@ export type AblationBundle = {
   runs: Record<string, AblationRun>;
 };
 
+const PREFIX = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 export async function loadAblations(
-  basePath = "/ablations",
+  basePath = `${PREFIX}/ablations`,
 ): Promise<AblationBundle | null> {
   const indexRes = await fetch(`${basePath}/index.json`);
   if (!indexRes.ok) return null;

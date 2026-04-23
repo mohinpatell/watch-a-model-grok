@@ -18,7 +18,8 @@ const mono = JetBrains_Mono({
 });
 
 const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://watch-a-model-grok.pages.dev";
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  "https://mohinpatell.github.io/watch-a-model-grok";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

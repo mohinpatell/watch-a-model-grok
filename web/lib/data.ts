@@ -47,7 +47,9 @@ async function fetchFloat32(url: string): Promise<Float32Array> {
   return new Float32Array(buf);
 }
 
-export async function loadDataset(basePath = "/data"): Promise<Dataset> {
+const PREFIX = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
+export async function loadDataset(basePath = `${PREFIX}/data`): Promise<Dataset> {
   const metaRes = await fetch(`${basePath}/meta.json`);
   if (!metaRes.ok) throw new Error(`failed to load meta.json: ${metaRes.status}`);
   const meta: Meta = await metaRes.json();

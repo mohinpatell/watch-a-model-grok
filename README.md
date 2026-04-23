@@ -4,7 +4,7 @@ Training a 1-layer transformer to compute `(a + b) mod 113` and watching the int
 
 After [Nanda et al. 2023, *Progress Measures for Grokking via Mechanistic Interpretability*](https://arxiv.org/abs/2301.05217).
 
-Live: https://watch-a-model-grok.pages.dev
+Live: https://mohinpatell.github.io/watch-a-model-grok
 
 ## What you're looking at
 
@@ -119,13 +119,6 @@ cd web && pnpm build    # emits web/out/
 
 Stack: Next.js 16 (static export), TypeScript, Tailwind v4, Zustand for client state, Observable Plot for line charts, Canvas 2D for the ring scatter, KaTeX for equations.
 
-## Deploy (Cloudflare Pages)
+## Deploy
 
-Dashboard settings:
-
-- **Build command**: `cd web && pnpm install --frozen-lockfile && pnpm build`
-- **Build output directory**: `web/out`
-- **Root directory**: `/`
-- **Environment variables**:
-  - `NODE_VERSION=22`
-  - `NEXT_PUBLIC_SITE_URL=https://<your-domain>` (for OG image absolute URLs)
+GitHub Pages via `.github/workflows/deploy.yml`. Pushes to `main` build `web/` and publish `web/out/` — no CI secrets required. Next.js is configured to apply a `/watch-a-model-grok` basePath only when `GITHUB_PAGES=true` (set by the workflow), so local `pnpm dev` still serves at `/`.
